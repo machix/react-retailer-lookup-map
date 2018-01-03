@@ -1,6 +1,7 @@
 import React, { Component } from "react"
-import "./styles.scss"
+import "./styles/retailer-map.scss"
 import RetailerList from "./components/retailer-list"
+import RetailerInfoBox from "./components/retailer-infobox"
 
 import includes from "lodash.includes"
 import some from "lodash.some"
@@ -8,8 +9,9 @@ import debounce from "lodash.debounce"
 
 import { withScriptjs, withGoogleMap, GoogleMap, Marker } from "react-google-maps"
 import { MarkerClusterer } from "react-google-maps/lib/components/addons/MarkerClusterer"
-import { InfoBox } from "react-google-maps/lib/components/addons/InfoBox"
 import { generateClusterStyles, generateMarkerIcon, getCountry, findNearestCoordinatesInCollection } from "./utils"
+
+
 
 class RetailerMap extends Component {
   static defaultOptions = {
@@ -28,7 +30,7 @@ class RetailerMap extends Component {
     if (!navigator.geolocation) return
     return new Promise((resolve, reject) => navigator.geolocation.getCurrentPosition(position => {
       const userPosition = new window.google.maps.LatLng(position.coords.latitude, position.coords.longitude)
-      this.setState({ userPosition, center: userPosition, zoom: 16 }, resolve)
+      this.setState({ userPosition, center: userPosition, zoom: 15 }, resolve)
     }, reject, { enableHighAccuracy: true }))
   }
 
@@ -41,25 +43,22 @@ class RetailerMap extends Component {
     }
   }
 
-  onBoundsChanged = debounce(() => requestAnimationFrame(() => {
-    const { retailers } = this.props
-    if (this.map) {
-      const retailersInView = retailers.filter(retailer => this.map.getBounds().contains(retailer.coordinates))
-      this.setState({ retailersInView })
-    }
-  }), 150, { leading: true, trailing: true })
-
-  zoomToFitNearestRetailer = () => {
+  focusNearestRetailer = () => {
     const { retailers } = this.props
     const { center } = this.state
-    if (center) {
-      const nearestRetailer = findNearestCoordinatesInCollection(retailers, center)
-      console.log(nearestRetailer)
-      const bounds = new window.google.maps.LatLngBounds()
-      bounds.extend(nearestRetailer.coordinates)
-      bounds.extend(center)
-      this.map.fitBounds(bounds)
-    }
+    const nearestRetailer = findNearestCoordinatesInCollection(retailers, position)
+    this.focusRetailer()
+    // this.focusRetailer(nearestRetailer)
+  }
+
+  focusRetailer = retailer => {
+    const { openedInfoBoxes } = this.state
+    this.setState({ center: retailer.coordinates, zoom: 13 })
+    if (openedInfoBoxes.includes(retailer.id) === false) this.toggleInfoBox(retailer.id)
+  }
+
+  onCenterChanged = e => {
+    console.log(e)
   }
 
   componentWillMount() {
@@ -73,17 +72,14 @@ class RetailerMap extends Component {
   render() {
     const { options, retailers, styles, color } = this.props
     const { center, openedInfoBoxes, zoom, marker, retailersInView } = this.state
-    const wrapperClasses = ["retailer-map__container"]
-    if (retailersInView && retailersInView.length) wrapperClasses.push("retailers-are-visible")
-
     return (
-      <div className={wrapperClasses.join(" ")}>
-        <RetailerList retailers={retailers} perPage={5} />
+      <div className="retailer-map__container">
+        <RetailerList retailers={retailers} perPage={5} onRetailerClick={this.focusRetailer} />
         <GoogleMap
           ref={map => this.map = map}
           defaultOptions={{ ...RetailerMap.defaultOptions, ...options }}
+          onCenterChanged={this.onCenterChanged}
           center={center}
-          onBoundsChanged={this.onBoundsChanged}
           zoom={zoom}
           styles={styles}>
           <MarkerClusterer
@@ -96,13 +92,7 @@ class RetailerMap extends Component {
                 onClick={() => this.toggleInfoBox(retailer.id)}
                 position={retailer.coordinates}
                 icon={generateMarkerIcon(color)}>
-                {includes(openedInfoBoxes, retailer.id) &&
-                  <InfoBox>
-                    <div>
-                      {retailer.title}
-                    </div>
-                  </InfoBox>
-                }
+                {includes(openedInfoBoxes, retailer.id) && <RetailerInfoBox retailer={retailer} />}
               </Marker>
             ))}
           </MarkerClusterer>

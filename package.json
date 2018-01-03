@@ -19,6 +19,7 @@
     "test:watch": "nwb test-react --server"
   },
   "dependencies": {
+    "alphanumeric-sort": "^0.0.1",
     "lodash.debounce": "^4.0.8",
     "lodash.includes": "^4.3.0",
     "lodash.memoize": "^4.1.2",

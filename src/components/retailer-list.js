@@ -1,4 +1,5 @@
 import React, { Component } from "react"
+import { compare } from "alphanumeric-sort"
 import Pagination from "react-paginate"
 
 export default class RetailerList extends Component {
@@ -23,25 +24,26 @@ export default class RetailerList extends Component {
   }
 
   render() {
-    const { retailers, perPage } = this.props
+    const { retailers, perPage, onRetailerClick } = this.props
     const { pageCount, offset, currentPage } = this.state
     if (retailers && retailers.length) {
       return (
         <div className="retailer-map__list">
           {retailers
-            .slice((currentPage - 1) * perPage, currentPage * perPage)
+            .sort((a, b) => compare(a.title, b.title))
+            .slice(currentPage * perPage, (currentPage + 1) * perPage)
             .map(retailer => (
-              <div className="" key={retailer.id}>
+              <div className="retailer-map__retailer-item" onClick={() => onRetailerClick(retailer)} key={retailer.id}>
                 {retailer.title}
               </div>
             ))}
-          <Pagination previousLabel={"previous"}
-            nextLabel={"next"}
+          <Pagination previousLabel={"❮"}
+            nextLabel={"❯"}
             breakLabel={<a href="">...</a>}
             breakClassName={"break-me"}
             pageCount={pageCount}
-            marginPagesDisplayed={2}
-            pageRangeDisplayed={5}
+            marginPagesDisplayed={0}
+            pageRangeDisplayed={4}
             onPageChange={this.handlePageClick}
             containerClassName={"pagination"}
             subContainerClassName={"pages pagination"}
