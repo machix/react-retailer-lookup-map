@@ -19,10 +19,6 @@ export default class RetailerList extends Component {
     }
   }
 
-  componentDidUpdate() {
-    console.log(this.state)
-  }
-
   render() {
     const { retailers, perPage, onRetailerClick } = this.props
     const { pageCount, offset, currentPage } = this.state

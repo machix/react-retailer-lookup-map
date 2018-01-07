@@ -41,39 +41,24 @@ export const getCountry = memoize(countryCode => new Promise(resolve => {
   })
 }))
 
-/**
- * Pass a collection of items with coordinates and a position and get the nearest item to that location returned
- * @param {array} collection
- * @param { { lat: number, lng: number } } position
- */
-export const findNearestCoordinatesInCollection = memoize((collection, position) => {
-  const { lat, lng } = position
-  const equatorialRadius = 6371
-  const radian = (Math.PI / 180)
-  let distances = []
-  let nearest = -1
+export const findNearestMarkerCoords = (collection, position) =>
+  collection.reduce((previous, current) => {
+    const maps = window.google.maps
+    const currentPosition = maps.geometry.spherical.computeDistanceBetween(position, new maps.LatLng(...current.coordinates));
+    const previousPosition = maps.geometry.spherical.computeDistanceBetween(position, new maps.LatLng(...previous.coordinates))
+    return currentPosition < previousPosition ? current : previous
+  })
 
-  for (let i = 0; i < collection.length; i++) {
-    const itemLat = collection[i].coordinates.lat
-    const itemLng = collection[i].coordinates.lng
+export const googleMapsAutocomplete = (search, country) => {
+  if (!search) return
+  const service = new window.google.maps.places.AutocompleteService()
+  const input = search + (country ? ", " + country.formatted_address : "")
+  return new Promise(resolve => service.getQueryPredictions({ input }, result => resolve(result)))
+}
 
-    const chLat = itemLat - lat
-    const chLng = itemLng - lng
-
-    const dLat = chLat * radian
-    const dLng = chLng * radian
-
-    const rLat = lat * radian
-    const rItemLat = itemLat * radian
-
-    const a = Math.sin(dLat / 2) * Math.sin(dLat / 2) + Math.sin(dLng / 2) * Math.sin(dLng / 2) * Math.cos(rLat) * Math.cos(rItemLat)
-    const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a))
-    const d = equatorialRadius * c
-
-    distances[i] = d
-    if (nearest == -1 || d < distances[nearest]) {
-      nearest = i
-    }
-  }
-  return { ...collection[nearest] }
-})
+export const googlePlacesSearch = (map, search, country) => {
+  if (!map || !search || !country) return
+  const service = new window.google.maps.places.PlacesService(map)
+  const input = { query: search, location: country.geometry.location }
+  return new Promise(resolve => service.textSearch(input, results => resolve(results)))
+}

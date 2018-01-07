@@ -20,11 +20,13 @@
   },
   "dependencies": {
     "alphanumeric-sort": "^0.0.1",
+    "keycode": "^2.1.9",
     "lodash.debounce": "^4.0.8",
     "lodash.includes": "^4.3.0",
     "lodash.memoize": "^4.1.2",
     "lodash.some": "^4.6.0",
     "query-string": "^5.0.1",
+    "react-autosuggest": "^9.3.2",
     "react-google-maps": "^9.4.3",
     "react-paginate": "^5.0.0"
   },

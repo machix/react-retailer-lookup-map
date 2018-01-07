@@ -13,7 +13,7 @@ const Demo = () => (
     <RetailerMap
       retailers={retailers}
       options={{ styles }}
-      color="#f00"
+      color="#F62459"
       countryCode="DK"
       googleMapURL={googleMapURL}
     />

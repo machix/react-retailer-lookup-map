@@ -7,8 +7,10 @@ export default props => {
 
   return (
     <InfoBox {...props}>
-      <div>
-        {retailer.title}
+      <div className="retailer-infobox">
+        <div className="retailer-infobox__title">
+          {retailer.title}
+        </div>
       </div>
     </InfoBox>
   )

@@ -2,6 +2,7 @@ import React, { Component } from "react"
 import "./styles/retailer-map.scss"
 import RetailerList from "./components/retailer-list"
 import RetailerInfoBox from "./components/retailer-infobox"
+import SearchBox from "./components/search-box"
 
 import includes from "lodash.includes"
 import some from "lodash.some"
@@ -9,7 +10,7 @@ import debounce from "lodash.debounce"
 
 import { withScriptjs, withGoogleMap, GoogleMap, Marker } from "react-google-maps"
 import { MarkerClusterer } from "react-google-maps/lib/components/addons/MarkerClusterer"
-import { generateClusterStyles, generateMarkerIcon, getCountry, findNearestCoordinatesInCollection } from "./utils"
+import { generateClusterStyles, generateMarkerIcon, getCountry, findNearestMarkerCoords } from "./utils"
 
 
 
@@ -46,19 +47,19 @@ class RetailerMap extends Component {
   focusNearestRetailer = () => {
     const { retailers } = this.props
     const { center } = this.state
-    const nearestRetailer = findNearestCoordinatesInCollection(retailers, position)
-    this.focusRetailer()
-    // this.focusRetailer(nearestRetailer)
+    const nearestRetailer = findNearestMarkerCoords(retailers, center)
+    this.focusRetailer(nearestRetailer)
   }
 
   focusRetailer = retailer => {
     const { openedInfoBoxes } = this.state
-    this.setState({ center: retailer.coordinates, zoom: 13 })
+    this.setState({ center: retailer.coordinates, zoom: 18 })
     if (openedInfoBoxes.includes(retailer.id) === false) this.toggleInfoBox(retailer.id)
   }
 
-  onCenterChanged = e => {
-    console.log(e)
+  onLocationSelected = location => {
+    if (!location) return
+    this.setState({ center: location.geometry.location }, this.focusNearestRetailer)
   }
 
   componentWillMount() {
@@ -67,16 +68,18 @@ class RetailerMap extends Component {
       .then(country => this.setState({ country }))
       .then(this.centerToCountry)
       .then(this.handleGeoLocation)
+      .then(this.focusNearestRetailer)
   }
 
   render() {
     const { options, retailers, styles, color } = this.props
-    const { center, openedInfoBoxes, zoom, marker, retailersInView } = this.state
+    const { center, openedInfoBoxes, zoom, marker, retailersInView, country } = this.state
     return (
       <div className="retailer-map__container">
+        <SearchBox country={country} map={this.map} onLocationSelected={this.onLocationSelected} />
         <RetailerList retailers={retailers} perPage={5} onRetailerClick={this.focusRetailer} />
         <GoogleMap
-          ref={map => this.map = map}
+          ref={map => this.map = map ? map.context.__SECRET_MAP_DO_NOT_USE_OR_YOU_WILL_BE_FIRED : null}
           defaultOptions={{ ...RetailerMap.defaultOptions, ...options }}
           onCenterChanged={this.onCenterChanged}
           center={center}
