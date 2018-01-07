@@ -9,6 +9,30 @@
       ]
   },
   {
+      "featureType": "administrative",
+      "elementType": "all",
+      "stylers": [
+          {
+              "visibility": "simplified"
+          },
+          {
+              "color": "#5b6571"
+          },
+          {
+              "lightness": "35"
+          }
+      ]
+  },
+  {
+      "featureType": "administrative.neighborhood",
+      "elementType": "all",
+      "stylers": [
+          {
+              "visibility": "off"
+          }
+      ]
+  },
+  {
       "featureType": "landscape",
       "elementType": "all",
       "stylers": [
@@ -78,14 +102,68 @@
       ]
   },
   {
+      "featureType": "road.highway",
+      "elementType": "geometry",
+      "stylers": [
+          {
+              "visibility": "on"
+          }
+      ]
+  },
+  {
+      "featureType": "road.highway",
+      "elementType": "labels",
+      "stylers": [
+          {
+              "visibility": "off"
+          }
+      ]
+  },
+  {
+      "featureType": "road.highway",
+      "elementType": "labels.icon",
+      "stylers": [
+          {
+              "visibility": "off"
+          }
+      ]
+  },
+  {
+      "featureType": "road.highway.controlled_access",
+      "elementType": "labels.icon",
+      "stylers": [
+          {
+              "visibility": "off"
+          }
+      ]
+  },
+  {
       "featureType": "road.arterial",
       "elementType": "all",
       "stylers": [
           {
-              "visibility": "on"
+              "visibility": "simplified"
           },
           {
-              "color": "#fee379"
+              "color": "#ffffff"
+          }
+      ]
+  },
+  {
+      "featureType": "road.arterial",
+      "elementType": "labels",
+      "stylers": [
+          {
+              "visibility": "off"
+          }
+      ]
+  },
+  {
+      "featureType": "road.arterial",
+      "elementType": "labels.icon",
+      "stylers": [
+          {
+              "visibility": "off"
           }
       ]
   },

@@ -12,8 +12,6 @@ import { withScriptjs, withGoogleMap, GoogleMap, Marker } from "react-google-map
 import { MarkerClusterer } from "react-google-maps/lib/components/addons/MarkerClusterer"
 import { generateClusterStyles, generateMarkerIcon, getCountry, findNearestMarkerCoords } from "./utils"
 
-
-
 class RetailerMap extends Component {
   static defaultOptions = {
     disableDefaultUI: true,
@@ -53,8 +51,7 @@ class RetailerMap extends Component {
 
   focusRetailer = retailer => {
     const { openedInfoBoxes } = this.state
-    this.setState({ center: retailer.coordinates, zoom: 18 })
-    if (openedInfoBoxes.includes(retailer.id) === false) this.toggleInfoBox(retailer.id)
+    this.setState({ center: retailer.coordinates, zoom: 15, openedInfoBoxes: [retailer.id] })
   }
 
   onLocationSelected = location => {
@@ -65,8 +62,7 @@ class RetailerMap extends Component {
   componentWillMount() {
     const { countryCode } = this.props
     getCountry(countryCode)
-      .then(country => this.setState({ country }))
-      .then(this.centerToCountry)
+      .then(country => this.setState({ country }, this.centerToCountry))
       .then(this.handleGeoLocation)
       .then(this.focusNearestRetailer)
   }

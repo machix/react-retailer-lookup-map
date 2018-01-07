@@ -5,7 +5,7 @@ import debounce from "lodash.debounce"
 import keycode from "keycode"
 
 
-const getSuggestionValue = suggestion => suggestion.description
+const getSuggestionValue = suggestion => suggestion && suggestion.description
 
 const renderSuggestion = suggestion => (
   <div className="retailer-search__suggestion">
@@ -38,13 +38,10 @@ export default class SearchBox extends Component {
 
   handleEnter = e => {
     if (!e.currentTarget.value) return
-    if (keycode(e) === 'enter') {
-      this.onSuggestionSelected(e)
-    }
+    if (keycode(e) === 'enter') this.onSuggestionSelected(e)
   }
 
   render() {
-
     const { value, suggestions } = this.state
 
     const inputProps = {

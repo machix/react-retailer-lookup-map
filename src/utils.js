@@ -32,14 +32,14 @@ export const generateMarkerIcon = (color, width = 30, height = 30) => new window
  * Use googles geocoder api to get an object for a country that can be used in google maps
  * @param {string} countryCode
  */
-export const getCountry = memoize(countryCode => new Promise(resolve => {
+export const getCountry = countryCode => new Promise(resolve => {
   const geocoder = new window.google.maps.Geocoder()
   geocoder.geocode({
     address: countryCode
   }, result => {
     resolve(result[0])
   })
-}))
+})
 
 export const findNearestMarkerCoords = (collection, position) =>
   collection.reduce((previous, current) => {
