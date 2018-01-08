@@ -26,11 +26,11 @@ export default class RetailerList extends Component {
       return (
         <div className="retailer-map__list">
           {retailers
-            .sort((a, b) => compare(a.title, b.title))
+            .sort((a, b) => compare(a.location, b.location))
             .slice(currentPage * perPage, (currentPage + 1) * perPage)
             .map(retailer => (
               <div className="retailer-map__retailer-item" onClick={() => onRetailerClick(retailer)} key={retailer.id}>
-                {retailer.title}
+                {retailer.location}
               </div>
             ))}
           <Pagination previousLabel={"❮"}

@@ -10,7 +10,7 @@ import debounce from "lodash.debounce"
 
 import { withScriptjs, withGoogleMap, GoogleMap, Marker } from "react-google-maps"
 import { MarkerClusterer } from "react-google-maps/lib/components/addons/MarkerClusterer"
-import { generateClusterStyles, generateMarkerIcon, getCountry, findNearestMarkerCoords } from "./utils"
+import { generateClusterStyles, generateMarkerIcon, generateCurrentLocationIcon, getCountry, findNearestMarkerCoords } from "./utils"
 
 class RetailerMap extends Component {
   static defaultOptions = {
@@ -50,17 +50,22 @@ class RetailerMap extends Component {
   }
 
   focusRetailer = retailer => {
-    const { openedInfoBoxes } = this.state
-    this.setState({ center: retailer.coordinates, zoom: 15, openedInfoBoxes: [retailer.id] })
+    const { openedInfoBoxes, center } = this.state
+    const bounds = new window.google.maps.LatLngBounds() // make sure current position and retailer is within frame
+    bounds.extend(...center)
+    bounds.extend(...retailer.coordinates)
+    this.setState({ center: retailer.coordinates, zoom: 14, openedInfoBoxes: [retailer.id] }, () => this.map.fitBounds(bounds))
   }
 
-  onLocationSelected = location => {
-    if (!location) return
-    this.setState({ center: location.geometry.location }, this.focusNearestRetailer)
+  onLocationSelected = selectedLocation => {
+    if (!selectedLocation) return
+    this.setState({ center: selectedLocation.geometry.location, selectedLocation }, this.focusNearestRetailer)
   }
 
   componentWillMount() {
     const { countryCode } = this.props
+
+    console.log(this.props.retailers)
     getCountry(countryCode)
       .then(country => this.setState({ country }, this.centerToCountry))
       .then(this.handleGeoLocation)
@@ -68,11 +73,11 @@ class RetailerMap extends Component {
   }
 
   render() {
-    const { options, retailers, styles, color } = this.props
-    const { center, openedInfoBoxes, zoom, marker, retailersInView, country } = this.state
+    const { options, retailers, styles, color, placeholder } = this.props
+    const { center, openedInfoBoxes, zoom, marker, retailersInView, country, userPosition } = this.state
     return (
       <div className="retailer-map__container">
-        <SearchBox country={country} map={this.map} onLocationSelected={this.onLocationSelected} />
+        <SearchBox country={country} map={this.map} placeholder={placeholder} onLocationSelected={this.onLocationSelected} />
         <RetailerList retailers={retailers} perPage={5} onRetailerClick={this.focusRetailer} />
         <GoogleMap
           ref={map => this.map = map ? map.context.__SECRET_MAP_DO_NOT_USE_OR_YOU_WILL_BE_FIRED : null}
@@ -86,6 +91,7 @@ class RetailerMap extends Component {
             styles={generateClusterStyles(color)}
             enableRetinaIcons
             gridSize={60}>
+            {userPosition && <Marker title="You are here" icon={generateCurrentLocationIcon(color)} position={userPosition} />}
             {retailers.map(retailer => (
               <Marker key={retailer.id}
                 onClick={() => this.toggleInfoBox(retailer.id)}

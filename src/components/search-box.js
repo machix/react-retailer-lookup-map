@@ -42,13 +42,14 @@ export default class SearchBox extends Component {
   }
 
   render() {
+    const { placeholder } = this.props
     const { value, suggestions } = this.state
 
     const inputProps = {
       value,
+      placeholder,
       type: "search",
       className: "retailer-search__input",
-      placeholder: "Search",
       onChange: this.onChange,
       onKeyDown: this.handleEnter
     }

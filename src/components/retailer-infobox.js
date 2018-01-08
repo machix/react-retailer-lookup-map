@@ -9,7 +9,7 @@ export default props => {
     <InfoBox {...props}>
       <div className="retailer-infobox">
         <div className="retailer-infobox__title">
-          {retailer.title}
+          {retailer.location}
         </div>
       </div>
     </InfoBox>
