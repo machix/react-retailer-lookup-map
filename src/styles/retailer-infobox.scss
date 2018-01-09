@@ -3,26 +3,25 @@
 @keyframes fadein {
   from {
     opacity: 0;
-    transform: translateY(-10%);
+    transform: translateY(-10%) scale(0.9);
   }
 
   to {
     opacity: 1;
-    transform: translateY(0%);
+    transform: translateY(0%) scale(1);
   }
 }
 
 .retailer-infobox {
   margin: $gutter 0 0 -21px;
   width: 260px;
-  overflow: visible;
+  overflow: visible !important;
   z-index: 1;
   padding: 10px 0 0 0;
   opacity: 0;
-  transform: translateY(-10%);
-  animation: fadein 170ms ease;
+  transform: translateY(-10%) scale(0.9);
+  animation: fadein 200ms cubic-bezier(0.075, 0.82, 0.165, 1);
   animation-fill-mode: forwards;
-  box-shadow: 2px 5px 20px -1px rgba(0, 0, 0, 0.15);
 
   &:before {
     content: "";
@@ -42,6 +41,7 @@
     background: white;
     text-shadow: 0 1px 1px rgba(0, 0, 0, 0.1);
     border-radius: 5px;
+    box-shadow: 2px 6px 30px -1px rgba(0, 0, 0, 0.15);
   }
 
   > img[src*="close.gif"] {
