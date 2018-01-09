@@ -45,7 +45,7 @@ class RetailerMap extends Component {
     if (!navigator.geolocation || !geolocate) return
     return new Promise((resolve, reject) => navigator.geolocation.getCurrentPosition(position => {
       const userPosition = new window.google.maps.LatLng(position.coords.latitude, position.coords.longitude)
-      this.setState({ userPosition, center: userPosition, zoom: 15 }, resolve)
+      this.setState({ userPosition, center: userPosition, zoom: 15 }, () => resolve(this.fitNearestRetailerInViewport()))
     }, reject, { enableHighAccuracy: true }))
   }
 
@@ -86,7 +86,8 @@ class RetailerMap extends Component {
 
   onLocationSelected = selectedLocation => {
     if (!selectedLocation) return
-    this.setState({ center: selectedLocation.geometry.location, selectedLocation }, this.fitNearestRetailerInViewport)
+    console.log(this.map)
+    this.setState({ center: selectedLocation.geometry.location, selectedLocation }, this.focusNearestRetailer)
   }
 
   componentWillMount() {
@@ -94,7 +95,6 @@ class RetailerMap extends Component {
     getCountry(countryCode)
       .then(country => this.setState({ country }, this.centerToCountry))
       .then(this.handleGeoLocation)
-      .then(this.fitNearestRetailerInViewport)
   }
 
   render() {

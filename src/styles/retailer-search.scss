@@ -1,17 +1,22 @@
 @import "variables";
+@import "mixins";
 
 .retailer-search {
   background: white;
   position: absolute;
-  left: 35%;
+  left: 50%;
+  width: 90%;
   transform: translateX(-50%);
   border: 1px solid #eee;
   box-shadow: 2px 3px 18px -1px rgba(0, 0, 0, 0.1);
-  width: 50%;
   height: 50px;
   top: $gutter;
   background: white;
   border-radius: 5px;
+  @include desktop {
+    left: 35%;
+    width: 50%;
+  }
 
   .react-autosuggest__container {
     height: 100%;
@@ -63,6 +68,7 @@
       color: rgb(185, 185, 185);
       font-style: italic;
       font-weight: 100;
+      text-transform: none;
     }
 
     &:focus {

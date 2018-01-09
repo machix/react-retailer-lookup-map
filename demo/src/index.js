@@ -4,6 +4,7 @@ import { render } from 'react-dom'
 import RetailerMap from '../../src';
 import styles from './styles.json';
 import retailersJSON from './retailers.json';
+import "./demo.scss"
 
 const googleMapURL = `https://maps.googleapis.com/maps/api/js?v=3&key=${process.env.GOOGLE_MAPS_API}&language=en&region=BH&libraries=geometry,drawing,places`
 
@@ -18,8 +19,7 @@ const retailers = retailersJSON
   }))
 
 const Demo = () => (
-  <div>
-    <h1>retailer-lookup-map demo</h1>
+  <div style={{ padding: 0, margin: 0 }}>
     <RetailerMap
       retailers={retailers}
       options={{ styles }}

@@ -37,17 +37,12 @@ export const generateCurrentLocationIcon = (color, width = 30, height = 30) => n
 
 /**
  * Use googles geocoder api to get an object for a country that can be used in google maps
- * @param {string} countryCode
+ * @param {string} country
  */
-export const getCountry = countryCode => new Promise(resolve => {
+export const getCountry = country => new Promise(resolve => {
   const geocoder = new window.google.maps.Geocoder()
-  const componentRestrictions = { country: countryCode }
-  geocoder.geocode({
-    address: countryCode,
-    componentRestrictions
-  }, result => {
-    resolve(result[0])
-  })
+  const componentRestrictions = { country }
+  geocoder.geocode({ address: country, componentRestrictions }, result => resolve(result[0]))
 })
 
 export const findNearestCoordsInCollection = (collection, position) =>

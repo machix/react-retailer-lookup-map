@@ -3,8 +3,12 @@
 
 .retailer-map {
   position: relative;
-  height: 700px;
+  height: 100vh;
   font-family: Arial, Helvetica, sans-serif;
+
+  @include desktop {
+    height: 700px;
+  }
 
   * {
     box-sizing: border-box;
@@ -19,13 +23,15 @@
   }
 
   &__viewport {
-    width: 75%;
     float: left;
+    width: 100%;
+    @include desktop {
+      width: 75%;
+    }
   }
 
   &__container {
     width: 100%;
   }
-
 }
 
