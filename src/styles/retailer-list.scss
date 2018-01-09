@@ -8,6 +8,7 @@
   position: relative;
   background: white;
   user-select: none;
+  box-shadow: -3px -3px 35px 5px rgba(0, 0, 0, 0.10);
 
   @include desktop {
     width: 25%;

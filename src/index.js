@@ -3,6 +3,8 @@ import "./styles/retailer-map.scss"
 import RetailerList from "./components/retailer-list"
 import RetailerInfoBox from "./components/retailer-infobox"
 import RetailerSearch from "./components/retailer-search"
+import { MAP_CONTEXT_KEY } from "./constants"
+import { generateClusterStyles, generateMarkerIcon, generateCurrentLocationIcon, getCountry, findNearestCoordsInCollection } from "./utils"
 
 import includes from "lodash.includes"
 import some from "lodash.some"
@@ -10,8 +12,6 @@ import debounce from "lodash.debounce"
 
 import { withScriptjs, withGoogleMap, GoogleMap, Marker } from "react-google-maps"
 import { MarkerClusterer } from "react-google-maps/lib/components/addons/MarkerClusterer"
-import { MAP_CONTEXT_KEY } from "./constants"
-import { generateClusterStyles, generateMarkerIcon, generateCurrentLocationIcon, getCountry, findNearestCoordsInCollection } from "./utils"
 
 class RetailerMap extends Component {
 
