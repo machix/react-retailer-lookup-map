@@ -1,5 +1,4 @@
 import React, { Component } from "react"
-import { compare } from "alphanumeric-sort"
 import { orderByProximity } from "../utils"
 import Pagination from "react-paginate"
 import RetailerItem from "./retailer-item"

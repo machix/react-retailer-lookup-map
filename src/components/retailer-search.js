@@ -22,7 +22,7 @@ export default class SearchBox extends Component {
   onSuggestionsFetchRequested = debounce(({ value }) => {
     const { country, language } = this.props
     googleMapsAutocomplete(value, country, language)
-      .then(suggestions => this.setState({ suggestions: suggestions || [] }))
+      .then(results => this.setState({ suggestions: results || [] }))
   }, 500, { leading: true })
 
   onSuggestionsClearRequested = () => this.setState({ suggestions: [] })
