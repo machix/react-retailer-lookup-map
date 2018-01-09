@@ -19,7 +19,7 @@ const retailers = retailersJSON
 
 const Demo = () => (
   <div>
-    <h1>retailer-lookup-map Demo</h1>
+    <h1>retailer-lookup-map demo</h1>
     <RetailerMap
       retailers={retailers}
       options={{ styles }}
