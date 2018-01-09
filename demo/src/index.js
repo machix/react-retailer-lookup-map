@@ -23,7 +23,7 @@ const Demo = () => (
     <RetailerMap
       retailers={retailers}
       options={{ styles }}
-      color="#F62459"
+      color="#ff2a05"
       countryCode="BH"
       placeholder="Find nearest retailer to address"
       googleMapURL={googleMapURL}

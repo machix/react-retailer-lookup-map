@@ -185,8 +185,12 @@
     "phones": [
       "+973 17000056"
     ],
-    "fax": null,
-    "emails": []
+    "fax": [
+      "+973 17777206"
+    ],
+    "emails": [
+      "karaz@colours.com"
+    ]
   },
   {
     "id": "a9503aa9-f824-49db-be55-5e58b74682a7",
@@ -201,8 +205,12 @@
     "phones": [
       "+973 17777206"
     ],
-    "fax": null,
-    "emails": []
+    "fax": [
+      "+973 17777206"
+    ],
+    "emails": [
+      "karaz@colours.com"
+    ]
   },
   {
     "id": "eef0f85c-26cf-4dfc-b71b-251d9cde7057",

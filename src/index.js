@@ -2,7 +2,7 @@ import React, { Component } from "react"
 import "./styles/retailer-map.scss"
 import RetailerList from "./components/retailer-list"
 import RetailerInfoBox from "./components/retailer-infobox"
-import SearchBox from "./components/search-box"
+import RetailerSearch from "./components/retailer-search"
 
 import includes from "lodash.includes"
 import some from "lodash.some"
@@ -10,7 +10,7 @@ import debounce from "lodash.debounce"
 
 import { withScriptjs, withGoogleMap, GoogleMap, Marker } from "react-google-maps"
 import { MarkerClusterer } from "react-google-maps/lib/components/addons/MarkerClusterer"
-import { MAP_CONTEXT } from "./constants"
+import { MAP_CONTEXT_KEY } from "./constants"
 import { generateClusterStyles, generateMarkerIcon, generateCurrentLocationIcon, getCountry, findNearestCoordsInCollection } from "./utils"
 
 class RetailerMap extends Component {
@@ -37,10 +37,7 @@ class RetailerMap extends Component {
 
   centerToCountry = () => {
     const { country } = this.state
-    console.log(country)
-    return new Promise(resolve => {
-      this.setState({ center: country.geometry.location }, () => resolve(this.map.fitBounds(country.geometry.bounds)))
-    })
+    return new Promise(resolve => this.setState({ center: country.geometry.location }, () => resolve(this.map.fitBounds(country.geometry.bounds))))
   }
 
   handleGeoLocation = () => {
@@ -89,7 +86,7 @@ class RetailerMap extends Component {
 
   onLocationSelected = selectedLocation => {
     if (!selectedLocation) return
-    this.setState({ center: selectedLocation.geometry.location }, this.fitNearestRetailerInViewport)
+    this.setState({ center: selectedLocation.geometry.location, selectedLocation }, this.fitNearestRetailerInViewport)
   }
 
   componentWillMount() {
@@ -105,10 +102,10 @@ class RetailerMap extends Component {
     const { center, focusedRetailer, zoom, marker, retailersInView, country, userPosition, openedInfoBoxes } = this.state
     return (
       <div className="retailer-map__container">
-        <SearchBox country={country} map={this.map} placeholder={placeholder} onLocationSelected={this.onLocationSelected} />
-        {country.hasOwnProperty("geometry") && <RetailerList position={userPosition || country.geometry.location} retailers={retailers} perPage={5} onRetailerClick={this.focusRetailer} />}
+        <RetailerSearch country={country} map={this.map} placeholder={placeholder} onLocationSelected={this.onLocationSelected} />
+        {country.hasOwnProperty("geometry") && <RetailerList position={userPosition || country.geometry.location} retailers={retailers} onRetailerClick={this.focusRetailer} />}
         <GoogleMap
-          ref={map => this.map = map ? map.context[MAP_CONTEXT] : null}
+          ref={map => this.map = map ? map.context[MAP_CONTEXT_KEY] : null}
           defaultOptions={{ ...RetailerMap.defaultOptions, ...options }}
           center={center}
           zoom={zoom}
@@ -125,7 +122,7 @@ class RetailerMap extends Component {
                   onClick={() => this.openInfoBox(retailer.id)}
                   position={retailer.coordinates}
                   icon={generateMarkerIcon(color)}>
-                  {openedInfoBoxes.includes(retailer.id) && <RetailerInfoBox retailer={retailer} onCloseClick={() => this.closeInfoBox(retailer.id)} />}
+                  {includes(openedInfoBoxes, retailer.id) && <RetailerInfoBox retailer={retailer} onCloseClick={() => this.closeInfoBox(retailer.id)} />}
                 </Marker>
               ))}
           </MarkerClusterer>

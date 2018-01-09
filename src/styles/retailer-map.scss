@@ -35,6 +35,10 @@
     background: white;
     user-select: none;
 
+    .break-me {
+      pointer-events: none;
+    }
+
     .pagination {
       padding: 0 5px;
       border-top: 1px solid #eee;
