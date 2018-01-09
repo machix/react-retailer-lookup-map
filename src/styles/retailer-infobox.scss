@@ -39,9 +39,10 @@
     overflow: visible;
     padding: 20px;
     background: white;
+    border: 1px solid #eee;
     text-shadow: 0 1px 1px rgba(0, 0, 0, 0.1);
     border-radius: 5px;
-    box-shadow: 2px 6px 30px -1px rgba(0, 0, 0, 0.15);
+    box-shadow: 0px 2px 30px -1px rgba(0, 0, 0, 0.2);
   }
 
   > img[src*="close.gif"] {

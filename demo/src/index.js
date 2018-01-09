@@ -18,17 +18,11 @@ const retailers = retailersJSON
     }
   }))
 
-const Demo = () => (
-  <div style={{ padding: 0, margin: 0 }}>
-    <RetailerMap
-      retailers={retailers}
-      options={{ styles }}
-      color="#ff2a05"
-      countryCode="BH"
-      placeholder="Find nearest retailer to address"
-      googleMapURL={googleMapURL}
-    />
-  </div>
-)
-
-render(<Demo />, document.querySelector('#demo'));
+render(<RetailerMap
+  retailers={retailers}
+  options={{ styles }}
+  color="#ff2a05"
+  countryCode="BH"
+  placeholder="Find nearest retailer to address"
+  googleMapURL={googleMapURL}
+/>, document.querySelector('#demo'));

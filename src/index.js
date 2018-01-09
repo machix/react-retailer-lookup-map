@@ -67,11 +67,6 @@ class RetailerMap extends Component {
     this.setState({ center: retailer.coordinates, zoom: 15, focusedRetailer: retailer })
   }
 
-  toggleInfoBox = id => {
-    const { openedInfoBoxes } = this.state
-    includes(openedInfoBoxes, id) ? this.closeInfoBox(id) : this.openInfoBox(id)
-  }
-
   closeInfoBox = id => {
     const { openedInfoBoxes } = this.state
     this.setState({ openedInfoBoxes: openedInfoBoxes.filter(item => item !== id) })
