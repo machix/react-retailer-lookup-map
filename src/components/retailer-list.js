@@ -9,7 +9,7 @@ export default class RetailerList extends Component {
   state = {
     pageCount: 0,
     offset: 0,
-    currentPage: 1,
+    currentPage: 0,
     perPage: 4
   }
 
