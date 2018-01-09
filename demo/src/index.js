@@ -3,15 +3,20 @@ import { render } from 'react-dom'
 
 import RetailerMap from '../../src';
 import styles from './styles.json';
-// TODO: update demo result to match that of actual API
 import retailersJSON from './retailers.json';
 
-const googleMapURL = `https://maps.googleapis.com/maps/api/js?v=3.exp&key=${process.env.GOOGLE_MAPS_API}&libraries=geometry,drawing,places`
+const googleMapURL = `https://maps.googleapis.com/maps/api/js?v=3&key=${process.env.GOOGLE_MAPS_API}&language=en&region=BH&libraries=geometry,drawing,places`
 
-const retailers = retailersJSON.map(retailer => {
-  return retailer
-})
-console.log(retailers)
+const retailers = retailersJSON
+  .filter(retailer => retailer.coordinates !== null)
+  .map(retailer => ({
+    ...retailer,
+    coordinates: {
+      lat: parseFloat(retailer.coordinates.lat),
+      lng: parseFloat(retailer.coordinates.lng)
+    }
+  }))
+
 const Demo = () => (
   <div>
     <h1>retailer-lookup-map Demo</h1>

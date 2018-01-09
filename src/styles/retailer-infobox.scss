@@ -1,0 +1,39 @@
+@import "variables";
+
+@keyframes fadein {
+  from {
+    opacity: 0;
+    transform: translateX(-10%);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateX(0%);
+  }
+}
+
+.retailer-infobox {
+  width: 250px;
+  box-shadow: 3px 7px 20px -1px rgba(0, 0, 0, 0.15);
+  overflow: visible;
+  z-index: 1;
+  background: white;
+  padding: $gutter;
+  border-radius: 5px;
+  border: 1px solid #eee;
+  opacity: 0;
+  transform: translateX(-10%);
+  animation: fadein 150ms ease-in;
+  animation-fill-mode: forwards;
+
+  > img[src*="close.gif"] {
+    content: url("data:image/svg+xml;utf8;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0iaXNvLTg4NTktMSI/Pgo8c3ZnIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyIgeG1sbnM6eGxpbms9Imh0dHA6Ly93d3cudzMub3JnLzE5OTkveGxpbmsiIHZlcnNpb249IjEuMSIgdmlld0JveD0iMCAwIDI5NS44MiAyOTUuODIiIGVuYWJsZS1iYWNrZ3JvdW5kPSJuZXcgMCAwIDI5NS44MiAyOTUuODIiIHdpZHRoPSI1MTJweCIgaGVpZ2h0PSI1MTJweCI+CiAgPGc+CiAgICA8Zz4KICAgICAgPHBhdGggZD0iTTE0Ny45MSwwQzY2LjEyNCwwLDAsNjYuMTI0LDAsMTQ3LjkxczY2LjEyNCwxNDcuOTEsMTQ3LjkxLDE0Ny45MXMxNDcuOTEtNjYuMTI0LDE0Ny45MS0xNDcuOTFTMjI5LjY5NiwwLDE0Ny45MSwweiAgICAgTTE0Ny45MSwyNzguNDE5Yy03MS4zNDUsMC0xMzAuNTA5LTU5LjE2NC0xMzAuNTA5LTEzMC41MDlTNzYuNTY1LDE3LjQwMSwxNDcuOTEsMTcuNDAxUzI3OC40MTksNzYuNTY1LDI3OC40MTksMTQ3LjkxICAgIFMyMTkuMjU1LDI3OC40MTksMTQ3LjkxLDI3OC40MTl6IiBmaWxsPSIjYmZiZmJmIi8+CiAgICAgIDxwYXRoIGQ9Im0xODkuNjczLDEwNi4xNDdjLTMuNDgtMy40OC04LjcwMS0zLjQ4LTEyLjE4MSwwbC0zMC40NTIsMzAuNDUzLTMwLjQ1Mi0zMC40NTJjLTMuNDgtMy40OC04LjcwMS0zLjQ4LTEyLjE4MSwwcy0zLjQ4LDguNzAxIDAsMTIuMTgxbDMwLjQ1MiwzMC40NTItMzAuNDUyLDMwLjQ1MmMtMy40OCwzLjQ4LTMuNDgsOC43MDEgMCwxMi4xODEgMS43NCwxLjc0IDUuMjIsMS43NCA2Ljk2LDEuNzRzNS4yMi0xLjc0IDUuMjItMS43NGwzMC40NTItMzAuNDUyIDMwLjQ1MiwzMC40NTJjMS43NCwxLjc0IDUuMjIsMS43NCA2Ljk2LDEuNzQgMS43NCwwIDMuNDgtMS43NCA1LjIyLTEuNzQgMy40OC0zLjQ4IDMuNDgtOC43MDEgMC0xMi4xODFsLTMwLjQ1Mi0zMC40NTIgMzAuNDUyLTMwLjQ1MmMzLjQ4My0zLjQ4MSAzLjQ4My04LjcwMiAwLjAwMi0xMi4xODJ6IiBmaWxsPSIjYmZiZmJmIi8+CiAgICA8L2c+CiAgPC9nPgo8L3N2Zz4K");
+    height: 20px;
+    width: 20px;
+  }
+
+  &__title {
+    font-size: 1.3rem;
+  }
+}
+

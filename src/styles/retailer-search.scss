@@ -1,0 +1,59 @@
+@import "variables";
+
+.retailer-search {
+  background: white;
+  position: absolute;
+  left: 35%;
+  transform: translateX(-50%);
+  border: 1px solid #eee;
+  box-shadow: 2px 3px 18px -1px rgba(0, 0, 0, 0.1);
+  width: 50%;
+  height: 50px;
+  top: $gutter;
+  background: white;
+  border-radius: 5px;
+
+  .react-autosuggest__container {
+    height: 100%;
+    width: 100%;
+  }
+
+  .react-autosuggest__suggestions-container {
+    padding: 0;
+    background: white;
+    position: relative;
+    top: -2px;
+    width: 100.2%;
+    box-shadow: 2px 3px 18px -1px rgba(0, 0, 0, 0.1);
+  }
+
+  .react-autosuggest__suggestions-list {
+    margin: 0;
+    padding: 0;
+  }
+
+  .react-autosuggest__suggestion {
+    list-style: none;
+
+    &--highlighted {
+      background: #f7f7f7;
+    }
+  }
+
+  &__suggestion {
+    border: 1px solid #eee;
+    padding: $gutter;
+  }
+
+  &__input {
+    border: none;
+    width: 100%;
+    height: 100%;
+    padding: 0 $gutter;
+    font-size: 1.2rem;
+
+    &:focus {
+      outline: none;
+    }
+  }
+}

@@ -3,7 +3,7 @@ import Autosuggest from "react-autosuggest"
 import { googleMapsAutocomplete, googlePlacesSearch } from "../utils"
 import debounce from "lodash.debounce"
 import keycode from "keycode"
-
+import "../styles/retailer-search.scss"
 
 const getSuggestionValue = suggestion => suggestion && suggestion.description
 
@@ -20,8 +20,8 @@ export default class SearchBox extends Component {
   }
 
   onSuggestionsFetchRequested = debounce(({ value }) => {
-    const { country } = this.props
-    googleMapsAutocomplete(value, country)
+    const { country, language } = this.props
+    googleMapsAutocomplete(value, country, language)
       .then(suggestions => this.setState({ suggestions: suggestions || [] }))
   }, 500, { leading: true })
 
