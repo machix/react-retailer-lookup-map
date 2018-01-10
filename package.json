@@ -19,12 +19,13 @@
     "test:watch": "nwb test-react --server"
   },
   "dependencies": {
-    "alphanumeric-sort": "^0.0.1",
+    "keycode": "^2.1.9",
     "lodash.debounce": "^4.0.8",
     "lodash.includes": "^4.3.0",
     "lodash.memoize": "^4.1.2",
+    "lodash.orderby": "^4.6.0",
     "lodash.some": "^4.6.0",
-    "query-string": "^5.0.1",
+    "react-autosuggest": "^9.3.2",
     "react-google-maps": "^9.4.3",
     "react-paginate": "^5.0.0"
   },
@@ -43,11 +44,13 @@
     "react": "^16.2.0",
     "react-dom": "^16.2.0"
   },
-  "author": "",
-  "homepage": "",
+  "author": "Frederik Bosch",
+  "homepage": "https://www.addition.dk",
   "license": "MIT",
-  "repository": "",
+  "repository": "https://github.com/fBosch/react-retailer-lookup-map",
   "keywords": [
-    "react-component"
+    "react-component",
+    "google-map",
+    "addition"
   ]
 }
